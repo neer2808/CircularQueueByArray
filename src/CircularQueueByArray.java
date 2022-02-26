@@ -1,96 +1,63 @@
 public class CircularQueueByArray {
-  int arr[];
-  int size;
-  int beginning;
-  int top;
-  public CircularQueueByArray(int size)
-  {
-    arr= new int[size];
-    this.size = size;
-    beginning = -1;
-    top = -1;
-  }
-  public boolean isEmpty()
-  {
-    if(top == -1)
-    {
-      return true;
+    int arr[];
+    int size, beginning, top;
+
+    public CircularQueueByArray(int size) {
+        arr = new int[size];
+        this.size = size;
+        beginning = top = -1;
     }
-    else
-    {
-      return false;
+
+    public boolean isEmpty() {
+        return top == -1;
     }
-  }
-  public boolean isFull()
-  {
-    if(top+1 == beginning)
-    {
-      return true;
+
+    public boolean isFull() {
+        return top + 1 == beginning || ((beginning == 0) && (top + 1 == size));
     }
-    else if((beginning== 0) && (top+1 == size))
-    {
-      return true;
-    }
-    else
-    {
-      return false;
-    }
-  }
-  public void enqueue(int value)
-  {
-    if(isFull())
-    {
-      System.out.println("overflow");
-    }
-    else if(isEmpty())
-    {
-      beginning = 0 ;
-      top ++;
-      arr[beginning] = value;
-    }
-    else
-    {
-        if(top+1 == size)
-        {
-          top= 0;
+
+    public void enqueue(int value) {
+        if (isFull())
+            System.out.println("Overflow!");
+        else if (isEmpty()) {
+            beginning = top = 0;
+            arr[beginning] = value;
+        } else {
+            if (top + 1 == size)
+                top = 0;
+            else
+                top++;
+            arr[top] = value;
         }
-        else
-        {
-          top++;
+        System.out.println("Inserted -> " + arr[top]);
+    }
+
+    public void dequeue() {
+        if (isEmpty())
+            System.out.println("Empty!");
+        else {
+            System.out.println("Deleted -> " + arr[beginning]);
+            if (beginning == top) {
+                beginning = top = -1;
+                System.out.println("Queue Cleared!");
+            } else if (beginning + 1 == size)
+                beginning = 0;
+            else
+                beginning++;
         }
-        arr[top]= value;
     }
 
-  }
-
-  public void dequeue()
-  {
-    if(isEmpty())
-    {
-      System.out.println("Empty");
+    public void traverse() {
+        if (beginning < top) {
+            for (int i = beginning; i < top; i++)
+                System.out.print(arr[i] + " ");
+            System.out.println();
+        } else {
+            for (int i = beginning; i < size; i++)
+                System.out.print(arr[i] + " ");
+            for (int i = 0; i <= top; i++)
+                System.out.print(arr[i] + " ");
+            System.out.println();
+        }
     }
-    else
-    {
-      System.out.println(arr[beginning]);
-      if(beginning == top)
-      {
-        beginning= top = -1;
-      }
-      else if(beginning+1 == size) {
-        beginning = 0;
-      }
-      else
-      {
-        beginning++;
-      }
-
-    }
-  }
-public void traverse()
-{
-  for(int i=0;i<size;i++)
-  {
-    System.out.println(arr[i]);
-  }
-}
 }
